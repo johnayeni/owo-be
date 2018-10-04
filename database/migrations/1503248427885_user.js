@@ -14,6 +14,8 @@ class UserSchema extends Schema {
         .unique();
       table.string('password', 60).notNullable();
       table.float('balance').defaultTo(0.0);
+      table.float('total_income').defaultTo(0.0);
+      table.float('total_expenses').defaultTo(0.0);
       table.timestamps();
     });
   }

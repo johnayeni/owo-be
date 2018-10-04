@@ -43,6 +43,10 @@ class User extends Model {
   transactions() {
     return this.hasMany('App/Models/Transaction');
   }
+
+  static get hidden() {
+    return ['password'];
+  }
 }
 
 module.exports = User;

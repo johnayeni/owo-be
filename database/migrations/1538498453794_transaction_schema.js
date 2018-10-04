@@ -10,7 +10,6 @@ class TransactionSchema extends Schema {
       table.string('type', 80).notNullable();
       table.integer('user_id', 254).notNullable();
       table.float('amount', 254).notNullable();
-
       table.timestamps();
     });
   }

@@ -25,7 +25,7 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get('user', 'UserController.get');
-  Route.get('transactions', 'TransactionController.all');
+  Route.get('transactions', 'TransactionController.getAll');
   Route.post('transaction', 'TransactionController.create');
   Route.put('transaction/:id', 'TransactionController.edit');
   Route.delete('transaction/:id', 'TransactionController.delete');
