@@ -3,7 +3,7 @@
 class UserController {
   async get({ auth, response }) {
     const user = await auth.getUser();
-    return response.json({ status: 200, message: 'User details gotten', user });
+    return response.status(200).json({ message: 'User details gotten', user });
   }
 }
 

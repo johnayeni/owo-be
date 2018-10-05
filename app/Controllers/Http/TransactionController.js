@@ -37,8 +37,15 @@ class TransactionController {
       return response.status(401).json({ message: 'Could not create transaction' });
     }
 
-    transaction.type === 'income' && (user.balance = user.balance + transaction.amount);
-    transaction.type === 'expense' && (user.balance = user.balance - transaction.amount);
+    if (transaction.type === 'income') {
+      user.balance = user.balance + transaction.amount;
+      user.total_income = user.total_income + transaction.amount;
+    }
+
+    if (transaction.type === 'expense') {
+      user.balance = user.balance - transaction.amount;
+      user.total_expenses = user.total_expense + transaction.amount;
+    }
 
     await user.save();
 
@@ -60,8 +67,15 @@ class TransactionController {
       return response.status(401).json({ message: 'Could not edit transaction' });
     }
 
-    transaction.type === 'income' && (user.balance = user.balance - transaction.amount);
-    transaction.type === 'expense' && (user.balance = user.balance + transaction.amount);
+    if (transaction.type === 'income') {
+      user.balance = user.balance - transaction.amount;
+      user.total_income = user.total_income - transaction.amount;
+    }
+
+    if (transaction.type === 'expense') {
+      user.balance = user.balance + transaction.amount;
+      user.total_expenses = user.total_expense - transaction.amount;
+    }
 
     await user.save();
 
@@ -69,8 +83,15 @@ class TransactionController {
 
     await transaction.save();
 
-    transaction.type === 'income' && (user.balance = user.balance + transaction.amount);
-    transaction.type === 'expense' && (user.balance = user.balance - transaction.amount);
+    if (transaction.type === 'income') {
+      user.balance = user.balance + transaction.amount;
+      user.total_income = user.total_income + transaction.amount;
+    }
+
+    if (transaction.type === 'expense') {
+      user.balance = user.balance - transaction.amount;
+      user.total_expenses = user.total_expense + transaction.amount;
+    }
 
     await user.save();
 
@@ -90,8 +111,15 @@ class TransactionController {
 
     await transaction.delete();
 
-    transaction.type === 'income' && (user.balance = user.balance - transaction.amount);
-    transaction.type === 'expense' && (user.balance = user.balance + transaction.amount);
+    if (transaction.type === 'income') {
+      user.balance = user.balance - transaction.amount;
+      user.total_income = user.total_income - transaction.amount;
+    }
+
+    if (transaction.type === 'expense') {
+      user.balance = user.balance + transaction.amount;
+      user.total_expenses = user.total_expense - transaction.amount;
+    }
 
     await user.save();
 
