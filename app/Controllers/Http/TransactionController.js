@@ -30,7 +30,7 @@ class TransactionController {
     const transaction = await Transaction.create({
       type: request.input('type'),
       user_id: user.id,
-      amount: request.input('amount'),
+      amount: Number(request.input('amount')),
     });
 
     if (!transaction) {
