@@ -21,20 +21,22 @@ class TransactionController {
     const validation = await validate(request.all(), {
       type: 'required, type',
       amount: 'required, amount',
+      description: 'required, description',
     });
 
     if (validation.fails()) {
-      return response.status(401).json({ messages: validation.messages() });
+      return response.status(400).json({ messages: validation.messages() });
     }
 
     const transaction = await Transaction.create({
       type: request.input('type'),
       user_id: user.id,
       amount: Number(request.input('amount')),
+      description: request.input('description'),
     });
 
     if (!transaction) {
-      return response.status(401).json({ message: 'Could not create transaction' });
+      return response.status(400).json({ message: 'Could not create transaction' });
     }
 
     if (transaction.type === 'income') {
@@ -44,7 +46,7 @@ class TransactionController {
 
     if (transaction.type === 'expense') {
       user.balance = user.balance - transaction.amount;
-      user.total_expenses = user.total_expense + transaction.amount;
+      user.total_expenses = user.total_expenses + transaction.amount;
     }
 
     await user.save();
@@ -64,7 +66,7 @@ class TransactionController {
     const transaction = await Transaction.find(id);
 
     if (!transaction) {
-      return response.status(401).json({ message: 'Could not edit transaction' });
+      return response.status(400).json({ message: 'Could not edit transaction' });
     }
 
     if (transaction.type === 'income') {
@@ -74,7 +76,7 @@ class TransactionController {
 
     if (transaction.type === 'expense') {
       user.balance = user.balance + transaction.amount;
-      user.total_expenses = user.total_expense - transaction.amount;
+      user.total_expenses = user.total_expenses - transaction.amount;
     }
 
     await user.save();
@@ -90,7 +92,7 @@ class TransactionController {
 
     if (transaction.type === 'expense') {
       user.balance = user.balance - transaction.amount;
-      user.total_expenses = user.total_expense + transaction.amount;
+      user.total_expenses = user.total_expenses + transaction.amount;
     }
 
     await user.save();
@@ -106,7 +108,7 @@ class TransactionController {
     const transaction = await Transaction.find(id);
 
     if (!transaction) {
-      return response.status(401).json({ message: 'Could not delete transaction' });
+      return response.status(400).json({ message: 'Could not delete transaction' });
     }
 
     await transaction.delete();
@@ -118,7 +120,7 @@ class TransactionController {
 
     if (transaction.type === 'expense') {
       user.balance = user.balance + transaction.amount;
-      user.total_expenses = user.total_expense - transaction.amount;
+      user.total_expenses = user.total_expenses - transaction.amount;
     }
 
     await user.save();

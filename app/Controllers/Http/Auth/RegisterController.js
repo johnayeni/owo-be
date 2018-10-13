@@ -12,7 +12,7 @@ class RegisterController {
     });
 
     if (validation.fails()) {
-      return response.status(401).json({ messages: validation.messages() });
+      return response.status(400).json({ messages: validation.messages() });
     }
 
     const user = await User.create({
@@ -22,7 +22,7 @@ class RegisterController {
     });
 
     if (!user) {
-      return response.status(401).json({ message: 'Could not create user' });
+      return response.status(400).json({ message: 'Could not create user' });
     }
 
     return response.status(200).json({ message: 'You have successfull created an account' });

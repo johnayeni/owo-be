@@ -8,8 +8,9 @@ class TransactionSchema extends Schema {
     this.create('transactions', (table) => {
       table.increments();
       table.string('type', 80).notNullable();
-      table.integer('user_id', 254).notNullable();
-      table.float('amount', 254).notNullable();
+      table.integer('user_id').notNullable();
+      table.float('amount').notNullable();
+      table.string('description').notNullable();
       table.timestamps();
     });
   }
